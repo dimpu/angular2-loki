@@ -1,31 +1,60 @@
-# Angular2Loki
+# angular2-loki
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.18.
+Lokijs for angular2, Ionic 2, NativeScript with Angualr.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+How to use
+```shell
+npm i angualr2-loki --save
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
+```
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { LokiModule } from './loki/loki.module';
+import { AppComponent } from './app.component';
 
-## Running unit tests
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    LokiModule,
+    .....
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+```ts 
+import { Component } from '@angular/core';
+import { LokiService } from 'angular2-loki';
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  constructor(private loki: LokiService) {
+    let db = loki.init('mydb.txt');
+    // db will export lokijs object
+    // full docs at https://rawgit.com/techfort/LokiJS/master/jsdoc/Loki.html
+    let users = db.addCollection('users');
+    users.insert({
+        name: 'Odin',
+        age: 50,
+        address: 'Asgard'
+    });
 
-## Deploying to Github Pages
+    console.log(users.findOne({ name: 'Odin' }));
+  }
+}
 
-Run `ng github-pages:deploy` to deploy to Github Pages.
+```
 
-## Further help
-
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
