@@ -5,7 +5,7 @@ Lokijs for angular2, Ionic 2, NativeScript with Angualr.
 
 How to use
 ```shell
-npm i angualr2-loki --save
+npm install angular2-loki
 
 ```
 
